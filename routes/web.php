@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $anyModel = new \Sitebill\Dragon\app\Models\AnyModel();
+    //$anyModel->setTable('data');
+    $anyModel->setTable('data');
+    //$anyModel->setTable('migrations');
+
+
+    //$record = $anyModel->where('client_id', 18)->first();
+    $record = $anyModel->take(3)->get();
+
     return view('welcome');
 });
 
