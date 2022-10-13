@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 
     //$record = $anyModel->where('client_id', 18)->first();
-    $record = $anyModel->take(3)->get();
+    $record = $anyModel->take(100)->get();
 
     return view('welcome');
 });
