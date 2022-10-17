@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Country;
+use App\Models\Data;
 use Sitebill\Dragon\Eloquent\Casts\SelectBox;
 use Sitebill\Dragon\Helpers\DragonHelper;
 
@@ -23,12 +25,32 @@ class OldModelController extends Controller
         $record->save();
 
         $dataModel = DragonHelper::getDynamicModel('data');
+
+        $dataModel->resolveRelationUsing('country_id', function ($relationModel) {
+            return $relationModel->belongsTo(Country::class, 'country_id');
+        });
+
         echo 'data model key = '.$dataModel->getKeyName().'<br>';
-        $record = $dataModel->where('id', 50072479)->first();
+        $record = $dataModel->with('country_id')->where('id', 50072479)->first();
+        //$record = $dataModel->where('id', 50072479)->first();
+
         //$data_id = $record->id->value;
         echo $record->id->value.' '.$record->price->value.'<br>';
+        echo 'country_id = '.$record->country_id->value.'<br>';
+        dd($record->country_id());
         $record->price->value += 1;
         $record->save();
+
+        /*
+        */
+
+        $dataNativeModel = new Data();
+        $dataNativeModel->resolveRelationUsing('country_id', function ($relationModel) {
+            return $relationModel->belongsTo(Country::class, 'country_id');
+        });
+        $dataNativerecord = $dataNativeModel->with('country_id')->where('id', 50072479)->first();
+
+
 
         $versionModel = DragonHelper::getDynamicModel('version');
         $versionModel->create([
@@ -50,7 +72,7 @@ class OldModelController extends Controller
 
 
 
-        exit;
+        //exit;
 
 
         //return response()->json($record);
