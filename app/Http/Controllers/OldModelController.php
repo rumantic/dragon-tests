@@ -23,32 +23,42 @@ class OldModelController extends Controller
         echo $record->fio->value.'<br>';
         $record->fio = 'Test Model '.microtime();
         $record->save();
-
-        $dataModel = DragonHelper::getDynamicModel('data');
-
-        $dataModel->resolveRelationUsing('country_id', function ($relationModel) {
-            return $relationModel->belongsTo(Country::class, 'country_id');
-        });
-
-        echo 'data model key = '.$dataModel->getKeyName().'<br>';
-        $record = $dataModel->with('country_id')->where('id', 50072479)->first();
-        //$record = $dataModel->where('id', 50072479)->first();
-
-        //$data_id = $record->id->value;
-        echo $record->id->value.' '.$record->price->value.'<br>';
-        echo 'country_id = '.$record->country_id->value.'<br>';
-        dd($record->country_id());
-        $record->price->value += 1;
-        $record->save();
-
         /*
         */
 
+        $dataModel = DragonHelper::getDynamicModel('data');
+
+
+        echo 'data model key = '.$dataModel->getKeyName().'<br>';
+        $records = $dataModel->take(10)->get();
+        foreach ( $records as $record ) {
+            echo $record->id->value.' '.$record->price->value.'<br>';
+            echo 'country_id = '.$record->country_id->value.'<br>';
+            echo 'country_id_value_string = '.$record->country_id->value_string.'<br>';
+
+            echo 'street_id = '.$record->street_id->value.'<br>';
+            echo 'street_id_value_string = '.$record->street_id->value_string.'<br>';
+            //dd($record->country_id());
+            $record->price->value += 1;
+            $record->save();
+        }
+        //$record = $dataModel->where('id', 50072479)->first();
+        //$record = $dataModel->where('id', 50072479)->first();
+
+        //$data_id = $record->id->value;
+
+
+        /*
         $dataNativeModel = new Data();
         $dataNativeModel->resolveRelationUsing('country_id', function ($relationModel) {
             return $relationModel->belongsTo(Country::class, 'country_id');
         });
-        $dataNativerecord = $dataNativeModel->with('country_id')->where('id', 50072479)->first();
+        */
+
+        //$dataNativerecord = $dataNativeModel->with('country_id')->where('id', 50072479)->first();
+
+        //$dataNativerecord = $dataNativeModel->where('id', 50072479)->first();
+        //dd($dataNativerecord->country_id()->first()->name->value);
 
 
 
