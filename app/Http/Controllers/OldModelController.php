@@ -9,8 +9,7 @@ use Sitebill\Dragon\Helpers\DragonHelper;
 
 class OldModelController extends Controller
 {
-
-    public function load_data () {
+    private function testClient () {
         $anyModel = DragonHelper::getDynamicModel('client');
         echo 'client model key = '.$anyModel->getKeyName().'<br>';
         $record = $anyModel->where('client_id', 3607)->first();
@@ -23,15 +22,18 @@ class OldModelController extends Controller
         echo $record->fio->value.'<br>';
         $record->fio = 'Test Model '.microtime();
         $record->save();
-        /*
-        */
+    }
+
+    public function load_data () {
+        // $this->testClient();
 
         $dataModel = DragonHelper::getDynamicModel('data');
-
+        //$tabs = $dataModel->first()->toArray();
 
         echo 'data model key = '.$dataModel->getKeyName().'<br>';
-        $records = $dataModel->take(10)->get();
+        $records = $dataModel->take(3)->get();
         foreach ( $records as $record ) {
+            //dd($record);
             echo $record->id->value.' '.$record->price->value.'<br>';
             echo 'country_id = '.$record->country_id->value.'<br>';
             echo 'country_id_value_string = '.$record->country_id->value_string.'<br>';
