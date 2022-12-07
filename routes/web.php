@@ -30,5 +30,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/kladr', [App\Http\Controllers\KladrController::class, 'kladr'])->name('home');
 
 Route::get('/tests/load_data', [App\Http\Controllers\OldModelController::class, 'load_data'])->name('load_data');
