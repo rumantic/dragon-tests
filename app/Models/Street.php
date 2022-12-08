@@ -8,7 +8,7 @@ use Sitebill\Dragon\Eloquent\Traits\AnyModel;
 
 class Street extends Model
 {
-    use AnyModel;
+    // use AnyModel;
 
     protected $table = 'street';
     protected $primaryKey = 'code';
