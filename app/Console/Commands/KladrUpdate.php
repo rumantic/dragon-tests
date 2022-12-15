@@ -32,7 +32,7 @@ class KladrUpdate extends Command
         $this->update_kladr();
         $this->update_street();
 
-        // INSERT INTO `street`(`name`, `socr`, `code`) VALUES SELECT `name`, `socr`, `code` FROM `kladr_mix` WHERE length(code) = 17
+        // INSERT INTO `street`(`name`, `socr`, `code`) SELECT `name`, `socr`, `code` FROM `kladr_mix` WHERE length(`code`) = 17
         // SELECT * FROM kladr_migrate.street WHERE region_id=63 and city_id=1 and town_id=0 and area_id=0
         // insert into `samara-zaselim`.`re_street` (`name`) SELECT `name` FROM kladr_migrate.street WHERE region_id=63 and city_id=1 and town_id=0 and area_id=0
 
